@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/MANZANAS_1.js"></script>
+        <script src="data/LOCALIZACINPOBLACIONES_2.js"></script>
+        <script src="data/RED_VIAL_3.js"></script>
+        <script src="data/HITOS_4.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-38.07438992093819,-72.40495749951117],[-38.05311438783482,-72.34674811825786]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        function pop_MANZANAS_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_MANZANAS_1_0() {
+            return {
+                pane: 'pane_MANZANAS_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,127,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_MANZANAS_1');
+        map.getPane('pane_MANZANAS_1').style.zIndex = 401;
+        map.getPane('pane_MANZANAS_1').style['mix-blend-mode'] = 'normal';
+        var layer_MANZANAS_1 = new L.geoJson(json_MANZANAS_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MANZANAS_1',
+            layerName: 'layer_MANZANAS_1',
+            pane: 'pane_MANZANAS_1',
+            onEachFeature: pop_MANZANAS_1,
+            style: style_MANZANAS_1_0,
+        });
+        bounds_group.addLayer(layer_MANZANAS_1);
+        map.addLayer(layer_MANZANAS_1);
+        function pop_LOCALIZACINPOBLACIONES_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">POBLACION</th>\
+                        <td>' + (feature.properties['POBLACION'] !== null ? autolinker.link(feature.properties['POBLACION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        var pattern_LOCALIZACINPOBLACIONES_2_0 = new L.StripePattern({
+            weight: 0.3,
+            spaceWeight: 3.4,
+            color: '#008a00',
+            opacity: 1.0,
+            spaceOpacity: 0,
+            angle: 315
+        });
+        pattern_LOCALIZACINPOBLACIONES_2_0.addTo(map);
+        function style_LOCALIZACINPOBLACIONES_2_0() {
+            return {
+                pane: 'pane_LOCALIZACINPOBLACIONES_2',
+                stroke: false,
+                fillOpacity: 1,
+                fillPattern: pattern_LOCALIZACINPOBLACIONES_2_0,
+                interactive: true,
+            }
+        }
+        function style_LOCALIZACINPOBLACIONES_2_1() {
+            return {
+                pane: 'pane_LOCALIZACINPOBLACIONES_2',
+                opacity: 1,
+                color: 'rgba(0,138,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_LOCALIZACINPOBLACIONES_2');
+        map.getPane('pane_LOCALIZACINPOBLACIONES_2').style.zIndex = 402;
+        map.getPane('pane_LOCALIZACINPOBLACIONES_2').style['mix-blend-mode'] = 'normal';
+        var layer_LOCALIZACINPOBLACIONES_2 = new L.geoJson.multiStyle(json_LOCALIZACINPOBLACIONES_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_LOCALIZACINPOBLACIONES_2',
+            layerName: 'layer_LOCALIZACINPOBLACIONES_2',
+            pane: 'pane_LOCALIZACINPOBLACIONES_2',
+            onEachFeature: pop_LOCALIZACINPOBLACIONES_2,
+            styles: [style_LOCALIZACINPOBLACIONES_2_0,style_LOCALIZACINPOBLACIONES_2_1,]
+        });
+        bounds_group.addLayer(layer_LOCALIZACINPOBLACIONES_2);
+        map.addLayer(layer_LOCALIZACINPOBLACIONES_2);
+        function pop_RED_VIAL_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_RED_VIAL_3_0() {
+            return {
+                pane: 'pane_RED_VIAL_3',
+                opacity: 1,
+                color: 'rgba(31,120,180,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_RED_VIAL_3');
+        map.getPane('pane_RED_VIAL_3').style.zIndex = 403;
+        map.getPane('pane_RED_VIAL_3').style['mix-blend-mode'] = 'normal';
+        var layer_RED_VIAL_3 = new L.geoJson(json_RED_VIAL_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_RED_VIAL_3',
+            layerName: 'layer_RED_VIAL_3',
+            pane: 'pane_RED_VIAL_3',
+            onEachFeature: pop_RED_VIAL_3,
+            style: style_RED_VIAL_3_0,
+        });
+        bounds_group.addLayer(layer_RED_VIAL_3);
+        map.addLayer(layer_RED_VIAL_3);
+        function pop_HITOS_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_HITOS_4_0(feature) {
+            switch(String(feature.properties['NOMBRE'])) {
+                case 'CARABINEROS DE CHILE':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/police.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'CESFAM ERCILLA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: -0.0349066,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/cross.svg',
+            iconSize: [23.472296, 23.472296]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'CORRALONES MUNICIPALES':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/accommodation_shelter.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'ESCUELA SAN FRANSISCO DE ASIS DE ERCILLA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/education_university.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'IGLESIA CATOLICA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/religion=christian.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'INTERNADO MUNICIPAL':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/lodging.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'LICEO ALONSO DE ERCILLA Y ZUÑIGA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/education_university.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'MERCADO MUNICIPAL':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/shop=convenience.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'MUNICIPALIDAD DE ERCILLA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/tourism=museum.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'PLAZA DE ARMAS ERCILLA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/landuse_coniferous_and_deciduous.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'POLIDEPORTIVO ERCILLA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/soccer.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'PRIMERA COMPAÑIA DE BOMBEROS ERCILLA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/amenity_firestation2.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'REGISTRO CIVIL ERCILLA':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/city_building.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'SALA CUNA PASITOS DE AMOR':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/shopping_pet2.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'SALA CUNA Y JARDIN INFANTIL PICHI  AGÑE KUYEN':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/shopping_pet2.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'SEDE SOCIAL POBL. MANUEL EUSTAQUIO PEREZ':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/home.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'SEDE SOCIAL SECTOR ESTACION':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/home.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'SEDE SOCIAL VILLA EL BOSQUE':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/home.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'SEDE SOCIAL VILLA LAS AGUILAS':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/home.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'SEDE SOCIAL VILLA MI ILUSION':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/home.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+                case 'TEMPLO RELIOGOSO EVANGELICO':
+                    return {
+                pane: 'pane_HITOS_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/amenity=place_of_worship.svg',
+            iconSize: [23.56, 23.56]
+        }),
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_HITOS_4');
+        map.getPane('pane_HITOS_4').style.zIndex = 404;
+        map.getPane('pane_HITOS_4').style['mix-blend-mode'] = 'normal';
+        var layer_HITOS_4 = new L.geoJson(json_HITOS_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_HITOS_4',
+            layerName: 'layer_HITOS_4',
+            pane: 'pane_HITOS_4',
+            onEachFeature: pop_HITOS_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_HITOS_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_HITOS_4);
+        map.addLayer(layer_HITOS_4);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'HITOS <br /><table><tr><td style="text-align: center;"><img src="legend/HITOS_4_CARABINEROSDECHILE0.png" /></td><td>CARABINEROS DE CHILE</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_CESFAMERCILLA1.png" /></td><td>CESFAM ERCILLA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_CORRALONESMUNICIPALES2.png" /></td><td>CORRALONES MUNICIPALES</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_ESCUELASANFRANSISCODEASISDEERCILLA3.png" /></td><td>ESCUELA SAN FRANSISCO DE ASIS DE ERCILLA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_IGLESIACATOLICA4.png" /></td><td>IGLESIA CATOLICA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_INTERNADOMUNICIPAL5.png" /></td><td>INTERNADO MUNICIPAL</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_LICEOALONSODEERCILLAYZUÑIGA6.png" /></td><td>LICEO ALONSO DE ERCILLA Y ZUÑIGA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_MERCADOMUNICIPAL7.png" /></td><td>MERCADO MUNICIPAL</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_MUNICIPALIDADDEERCILLA8.png" /></td><td>MUNICIPALIDAD DE ERCILLA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_PLAZADEARMASERCILLA9.png" /></td><td>PLAZA DE ARMAS ERCILLA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_POLIDEPORTIVOERCILLA10.png" /></td><td>POLIDEPORTIVO ERCILLA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_PRIMERACOMPAÑIADEBOMBEROSERCILLA11.png" /></td><td>PRIMERA COMPAÑIA DE BOMBEROS ERCILLA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_REGISTROCIVILERCILLA12.png" /></td><td>REGISTRO CIVIL ERCILLA</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_SALACUNAPASITOSDEAMOR13.png" /></td><td>SALA CUNA PASITOS DE AMOR</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_SALACUNAYJARDININFANTILPICHIAGÑEKUYEN14.png" /></td><td>SALA CUNA Y JARDIN INFANTIL PICHI  AGÑE KUYEN</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_SEDESOCIALPOBLMANUELEUSTAQUIOPEREZ15.png" /></td><td>SEDE SOCIAL POBL. MANUEL EUSTAQUIO PEREZ</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_SEDESOCIALSECTORESTACION16.png" /></td><td>SEDE SOCIAL SECTOR ESTACION</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_SEDESOCIALVILLAELBOSQUE17.png" /></td><td>SEDE SOCIAL VILLA EL BOSQUE</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_SEDESOCIALVILLALASAGUILAS18.png" /></td><td>SEDE SOCIAL VILLA LAS AGUILAS</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_SEDESOCIALVILLAMIILUSION19.png" /></td><td>SEDE SOCIAL VILLA MI ILUSION</td></tr><tr><td style="text-align: center;"><img src="legend/HITOS_4_TEMPLORELIOGOSOEVANGELICO20.png" /></td><td>TEMPLO RELIOGOSO EVANGELICO</td></tr></table>': layer_HITOS_4,'<img src="legend/RED_VIAL_3.png" /> RED_VIAL': layer_RED_VIAL_3,'<img src="legend/LOCALIZACINPOBLACIONES_2.png" /> LOCALIZACIÓN POBLACIONES ': layer_LOCALIZACINPOBLACIONES_2,'<img src="legend/MANZANAS_1.png" /> MANZANAS ': layer_MANZANAS_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
+        map.on("zoomend", function(){
+
+                if (map.hasLayer(layer_HITOS_4)) {
+                    if (map.getZoom() <= 19 && map.getZoom() >= 19) {
+                        layer_HITOS_4.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_HITOS_4.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        });
+        setBounds();
+        var i = 0;
+        layer_RED_VIAL_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMBRE'] !== null?String('<div style="color: #000000; font-size: 7pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NOMBRE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_RED_VIAL_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+                if (map.hasLayer(layer_HITOS_4)) {
+                    if (map.getZoom() <= 19 && map.getZoom() >= 19) {
+                        layer_HITOS_4.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_HITOS_4.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        map.addControl(new L.Control.Search({
+            layer: layer_RED_VIAL_3,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'NOMBRE'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        resetLabels([layer_LOCALIZACINPOBLACIONES_2,layer_RED_VIAL_3,layer_HITOS_4]);
+        map.on("zoomend", function(){
+            resetLabels([layer_LOCALIZACINPOBLACIONES_2,layer_RED_VIAL_3,layer_HITOS_4]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_LOCALIZACINPOBLACIONES_2,layer_RED_VIAL_3,layer_HITOS_4]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_LOCALIZACINPOBLACIONES_2,layer_RED_VIAL_3,layer_HITOS_4]);
+        });
+        </script>
+    </body>
+</html>
